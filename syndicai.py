@@ -32,9 +32,9 @@ class PythonPredictor:
         img = torch.reshape(file , (1, 3, image_size, image_size))
         return self.model(img)
 
-    def predict(self, img):
+    def predict(self, payload):
         allClasses = ['3D Mask', 'A4', 'Face Mask', 'Live', 'Pad', 'PC', 'Phone', 'Photo', 'Poster', 'Region Mask', 'Upper Body Mask']
-        image = requests.get(img["url"]).content
+        image = requests.get(payload["url"]).content
         img_pil = Image.open(BytesIO(image))
         img_tensor = self.data_transforms(img_pil)
         img_tensor.unsqueeze_(0)
