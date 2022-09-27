@@ -17,7 +17,7 @@ class PythonPredictor:
             ])
         device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         self.model = models.resnet50(pretrained=False).to(device)
-        for param in model.parameters():
+        for param in self.model.parameters():
             param.requires_grad = False
 
         self.model.fc = nn.Sequential(
