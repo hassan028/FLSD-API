@@ -16,16 +16,16 @@ class PythonPredictor:
                 self.normalize
             ])
         device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-        model = models.resnet50(pretrained=False).to(device)
+        self.model = models.resnet50(pretrained=False).to(device)
         for param in model.parameters():
             param.requires_grad = False
 
-        model.fc = nn.Sequential(
+        self.model.fc = nn.Sequential(
             nn.Linear(2048, 128),
             nn.ReLU(inplace=True),
             nn.Linear(128, 11)).to(device)
-        model.load_state_dict(torch.load('weights.h5', map_location=torch.device(device)))
-        model.eval()
+        self.model.load_state_dict(torch.load('weights.h5', map_location=torch.device(device)))
+        self.model.eval()
 
     def predictLabel(self, file):
         image_size = 224
