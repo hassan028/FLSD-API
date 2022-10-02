@@ -4,6 +4,7 @@ import torch.nn as nn
 from PIL import Image
 import requests
 from io import BytesIO
+from helper import bytes_to_img
 
 class PythonPredictor:
     def  __init__(self, config):
