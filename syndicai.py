@@ -34,9 +34,9 @@ class PythonPredictor:
 
     def predict(self, payload):
         allClasses = ['3D Mask', 'A4', 'Face Mask', 'Live', 'Pad', 'PC', 'Phone', 'Photo', 'Poster', 'Region Mask', 'Upper Body Mask']
-        image = requests.get(payload["url"]).content
-        img_pil = Image.open(BytesIO(image))
-        img_tensor = self.data_transforms(img_pil)
+        image_str = payload["url"]
+        img_pil = bytes_to_img(image_str)
+        img_tensor = self.data_transforms(img_pil[0])
         img_tensor.unsqueeze_(0)
         out = self.predictLabel(img_tensor)
         _, predicted = torch.max(out.data, 1)
